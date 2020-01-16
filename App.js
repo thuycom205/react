@@ -15,6 +15,7 @@ import {
 import {ImportMinor} from '@shopify/polaris-icons';
 
 import Game from  './tictactoe';
+import Dtable from  './dynamicrow';
 
 class Item extends React.Component {
   render() {
@@ -52,7 +53,7 @@ class Car extends React.Component {
   }
 
   shoot() {
-    alert("what");
+        alert("what");
 
     var self = this;
     self.state.cart = ['Mustang'];
@@ -253,6 +254,7 @@ export default function App() {
               <Button primary>Submit</Button>
               <Car />
               <Game />
+              <Dtable />
               <RandomList />
             </FormLayout>
           </Card>
