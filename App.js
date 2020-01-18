@@ -6,6 +6,7 @@ import {
   Card,
   Link,
   Button,
+  Form,
   FormLayout,
   TextField,
   AccountConnection,
@@ -16,6 +17,7 @@ import {ImportMinor} from '@shopify/polaris-icons';
 
 import Game from  './tictactoe';
 import Dtable from  './dynamicrow';
+import { func } from 'prop-types';
 
 class Item extends React.Component {
   render() {
@@ -33,6 +35,7 @@ class Item extends React.Component {
 class Car extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       cart: [],
       shop: [
@@ -154,10 +157,25 @@ export default function App() {
   const [checkboxes, setCheckboxes] = useState([]);
   const [connected, setConnected] = useState(false);
 
+  const [rentalPrices, setRentalPrices] = useState([{id: 35, duration: 1, unit: 'minute', price: 200},
+  {id: 42, duration: 2, unit: 'day', price: 150},]);
+
+  const handleRentalPricesChange = useCallback(
+    (value) => {
+      //setRentalPrices(value);
+       alert('value of dynamic row is changed') ;
+       alert(value);
+       console.log(value);
+       setRentalPrices(value);
+    },
+    [],
+  );
+
   const handleFirstChange = useCallback((value) => setFirst(value), []);
   const handleLastChange = useCallback((value) => setLast(value), []);
   const handleEmailChange = useCallback((value) => setEmail(value), []);
   const handleCheckboxesChange = useCallback(
+
     (value) => setCheckboxes(value),
     [],
   );
@@ -168,6 +186,15 @@ export default function App() {
     },
     [connected],
   );
+  const handleSubmit = useCallback((_event) => {
+    event.preventDefault();
+   
+    var data= {
+      email: email,
+      rentalPrices: rentalPrices
+    };
+    console.log(data);
+  }, []);
 
   const breadcrumbs = [{content: 'Sample apps'}, {content: 'webpack'}];
   const primaryAction = {content: 'New product'};
@@ -220,6 +247,7 @@ export default function App() {
           title="Form"
           description="A sample form using Polaris components."
         >
+          <Form onSubmit={handleSubmit}>
           <Card sectioned>
             <FormLayout>
               <FormLayout.Group>
@@ -252,12 +280,16 @@ export default function App() {
               />
 
               <Button primary>Submit</Button>
+              <Button submit>Submit</Button>
+
               <Car />
               <Game />
-              <Dtable />
+              <Dtable defaultValue={rentalPrices} onChange={handleRentalPricesChange} />
               <RandomList />
             </FormLayout>
           </Card>
+          </Form>
+
         </Layout.AnnotatedSection>
 
         <Layout.Section>
