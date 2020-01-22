@@ -12,6 +12,7 @@ import {
   AccountConnection,
   ChoiceList,
   SettingToggle,
+  Select
 } from '@shopify/polaris';
 import {ImportMinor} from '@shopify/polaris-icons';
 
@@ -157,6 +158,7 @@ export default function App() {
   const [checkboxes, setCheckboxes] = useState([]);
   const [connected, setConnected] = useState(false);
 
+  const [deliveryType, setDeliveryType] =  useState('pickup');
   const [rentalPrices, setRentalPrices] = useState([{id: 35, duration: 1, unit: 'minute', price: 200},
   {id: 42, duration: 2, unit: 'day', price: 150},]);
 
@@ -167,6 +169,16 @@ export default function App() {
        alert(value);
        console.log(value);
        setRentalPrices(value);
+    },
+    [],
+  );
+
+  const handleDeliveryTypeChange = useCallback(
+    (value) => {
+      
+       alert(value);
+      
+       setDeliveryType(value);
     },
     [],
   );
@@ -214,6 +226,11 @@ export default function App() {
   ) : (
     <ConnectAccount onAction={toggleConnection} />
   );
+  const deliveryOptions = [
+    {label: 'Local Pickup', value: 'pickup'},
+    {label: 'Shipping', value: 'shipping'},
+  
+  ];
 
   return (
     <Page
@@ -247,6 +264,10 @@ export default function App() {
           title="Form"
           description="A sample form using Polaris components."
         >
+        <Layout.AnnotatedSection
+          title="Delivery type"
+          description="Define delivery type."
+        ></Layout.AnnotatedSection>
           <Form onSubmit={handleSubmit}>
           <Card sectioned>
             <FormLayout>
@@ -282,10 +303,40 @@ export default function App() {
               <Button primary>Submit</Button>
               <Button submit>Submit</Button>
 
-              <Car />
-              <Game />
+             
               <Dtable defaultValue={rentalPrices} onChange={handleRentalPricesChange} />
               <RandomList />
+            </FormLayout>
+          </Card>
+          <Card sectioned>
+            <FormLayout>
+            <Select
+            label="Delivery type"
+            options={deliveryOptions}
+            onChange={handleDeliveryTypeChange}
+            value={deliveryType}
+             />
+              <TextField
+                label="Lead time"
+
+               />
+
+              <TextField
+                label="Lead time"
+
+               />
+                <TextField
+                label="Pickup address"
+
+               />
+                <TextField
+                label="Pickup Longitude"
+
+               />
+                 <TextField
+                label="Pickup Latitude"
+
+               />
             </FormLayout>
           </Card>
           </Form>
