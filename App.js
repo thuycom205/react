@@ -57,7 +57,6 @@ class Car extends React.Component {
   }
 
   shoot() {
-        alert("what");
 
     var self = this;
     self.state.cart = ['Mustang'];
@@ -113,44 +112,7 @@ class Car extends React.Component {
   }
 }
 
-function RandomList() {
-  const [items, setItems] = useState([]);
 
-  const addItem = () => {
-    setItems([
-      ...items,
-      {
-        id: items.length,
-        value: Math.random() * 100
-      }
-    ]);
-  };
-
-  const removeItem = () => {
-    var newI =[];
-   for (var i = 1; i < items.length; i++)  {
-      var newI = items[i];
-    }
-
-    setItems(
-      [newI]
-      
-    );
-  };
-
-  return (
-    <>
-      <button onClick={addItem}>Add a number</button>
-      <button onClick={removeItem}>Remove a number</button>
-
-      <ul>
-        {items.map(item => (
-          <li key={item.id}>{item.value}</li>
-        ))}
-      </ul>
-    </>
-  );
-}
 export default function App() {
   const [first, setFirst] = useState('');
   const [last, setLast] = useState('');
@@ -165,8 +127,6 @@ export default function App() {
   const handleRentalPricesChange = useCallback(
     (value) => {
       //setRentalPrices(value);
-       alert('value of dynamic row is changed') ;
-       alert(value);
        console.log(value);
        setRentalPrices(value);
     },
@@ -176,7 +136,6 @@ export default function App() {
   const handleDeliveryTypeChange = useCallback(
     (value) => {
       
-       alert(value);
       
        setDeliveryType(value);
     },
@@ -206,6 +165,21 @@ export default function App() {
       rentalPrices: rentalPrices
     };
     console.log(data);
+    // odoo.define('react.rental_react', function (require) {
+    //   var rpc = require('web.rpc');
+    //    ////
+    //    rpc.query({
+    //     model: 'pos_mercury.mercury_transaction',
+    //     method: 'rpc_method',
+    //     args: ['test'],
+    // }, {
+    //     timeout: self.server_timeout_in_ms
+    // })
+    // .then(function (data) { 
+    //    alert('after calling p');
+    // });
+    //    /////
+    // });
   }, []);
 
   const breadcrumbs = [{content: 'Sample apps'}, {content: 'webpack'}];
@@ -305,7 +279,6 @@ export default function App() {
 
              
               <Dtable defaultValue={rentalPrices} onChange={handleRentalPricesChange} />
-              <RandomList />
             </FormLayout>
           </Card>
           <Card sectioned>

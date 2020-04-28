@@ -31,7 +31,6 @@ class DItem extends React.Component {
  }
 
   onChangePrice( e) {
-  // alert(e);
     let oldPirce = this.state.item;
     oldPirce.price = e;
     this.setState({item: oldPirce})
@@ -40,7 +39,6 @@ class DItem extends React.Component {
   }
 
   onChangeUnit( ev) {
-     alert(ev);
       // let oldPirce = this.state.item;
       // oldPirce.price = e;
       // this.setState({item: oldPirce})
@@ -101,6 +99,8 @@ class Dtable extends React.Component {
     super(props);
 
     this.state = {
+      error: null,
+      isLoaded: false,
       count: 72,
       prices: this.props.defaultValue
   };
@@ -112,8 +112,50 @@ class Dtable extends React.Component {
     
   //);
   }
+
+  componentDidMount() {
+    console.log('rpc');
+    return window.rpc.query({
+        model: 'sale.order',
+        method: 'search_read',
+        args: [
+          [['user_id', '=', [10]]],
+          ['id', 'name', 'created_date', 'partner_id'],
+      ],
+    }, {
+        shadow: true,
+    }).then(function (credit) {
+        console.log('credit');
+        console.log(credit);
+    });
+  //   window.odoo.define('frontdesk.rental', function (require) {
+  //     'use strict';
+  //     var core = require('web.core');
+  //     require('web.dom_ready');
+  
+  // //var AbstractAction = require('web.Widget');
+  
+  // //var x = new AbstractAction();
+  
+  //     var rpc = require('web.rpc');
+  //     console.log('rpc');
+  //     return rpc.query({
+  //         model: 'project.project',
+  //         method: 'read',
+  //         args: [0],
+  //     }, {
+  //         shadow: true,
+  //     }).then(function (credit) {
+  //         console.log('credit');
+  //     });
+  //     console.log(' end rpc');
+
+  
+  // });
+  
+
+  }
   handleOnchange(item) {
-    alert(item.id);
     // item.price = 78;
     // this.setState({
     //   count:current_id,
@@ -127,12 +169,10 @@ class Dtable extends React.Component {
   }
 
   handlePriceChange(item) {
-   alert(item.price);
   }
   handleOnRemove(item){
   let  prices  = this.state.prices;
   let newPrices =[];
-  alert('handle remove' + item.id);
   for (var i = 0; i < prices.length ; i++) {
     console.log(prices[i].id);
 
@@ -169,10 +209,13 @@ class Dtable extends React.Component {
   });
 
   this.props.onChange(this.state.prices);
+
+  window.core.bus.trigger('shooted', 'barcode1');
+
 }
   render() {
 
-
+   
     return (
       <table className="game">
         <thead>
