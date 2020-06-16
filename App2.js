@@ -3,6 +3,8 @@ import {Avatar, Card, ChoiceList, Filters, RangeSlider, ResourceList, TextField,
 
 export default function ResourceListFiltersExample(props) {
     
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [sortValue, setSortValue] = useState('DATE_MODIFIED_DESC');
 
   const [accountStatus, setAccountStatus] = useState(null);
   const [moneySpent, setMoneySpent] = useState(null);
@@ -11,12 +13,65 @@ export default function ResourceListFiltersExample(props) {
   const [items, setItems] = useState(null);
 
   const handleItemsChange = useCallback(
-    (value) => setItems(value),
+    (value) =>  {
+      setSelectedItems(value);
+      console.log(value);
+      console.log('prop item');
+      console.log(window.rentalItems);
+      
+
+      if (window.rentalItems != null && window.rentalItems != undefined) {
+        window.rentalSOCheckedE = [];
+      
+      for (var i = 0 ; i < window.rentalItems.length ; i++) {
+        var item =window.rentalItems[i];
+        if (value != null & value!= undefined) 
+        for (var j = 0; j < value.length; j ++) {
+          if (item.id == value[j]) {
+            var name  = item.name;
+            console.log('name of select item');
+  
+            console.log(name);
+            // var name = 'S00022';
+            var searchTd =  'td:contains(' + name + ')';
+            var targetElement = jQuery(searchTd).prev().find('input');
+             window.rentalSOCheckedE.push(targetElement.attr('id'));
+
+              if (jQuery(searchTd).prev().find('input').attr('checked') != 'checked') {
+                jQuery(searchTd).prev().find('input').trigger('click');
+                jQuery(searchTd).prev().find('input').attr('checked', 'checked');
+              }
+            
+
+
+            
+  
+  
+          }
+        }
+       
+      }
+      //end of for
+      jQuery('td').find('input').each(function(index, element) {
+        if (  jQuery(element).attr('checked') == 'checked') {
+          var idAttr = jQuery(element).attr('id');
+          if (window.rentalSOCheckedE.indexOf(idAttr) !== -1) {
+                console.log(idAttr);
+          } else {
+            jQuery(element).removeAttr('checked');
+            jQuery(element).trigger('click');
+
+          }
+        }
+       });
+    }
+     },
     [],
   );
   const handleAccountStatusChange = useCallback(
       function(value) { 
-        window.core.bus.trigger('menu_item_clicked', '__filter__24');
+        // window.core.bus.trigger('menu_item_clicked', '__filter__24');
+        jQuery('.o_menu_item[data-id="__filter__24"]').trigger('click');
 
         setAccountStatus(value); } ,
     // (value) => setAccountStatus(value),
@@ -31,7 +86,26 @@ export default function ResourceListFiltersExample(props) {
     [],
   );
   const handleFiltersQueryChange = useCallback(
-    (value) => setQueryValue(value),
+    (value) =>{
+      setQueryValue(value);
+
+      // jQuery('input[role="searchbox"]').typetype(
+      //   'Text to append',
+      //   {
+      //     e: 0.04, // error rate. (use e=0 for perfect typing)
+      //     t: 100, // interval between keypresses
+      //     keypress: function (){
+      //       // called after every keypress (this may be an erroneous keypress!)
+      //     },
+      //     callback: function (){
+      //       // the `this` keyword is bound to the particular element.
+      //     }
+      //   }
+      // );
+      window.rental_filter_keyword =value;
+      window.core.bus.trigger('react_search', '__filter__24');
+
+    } ,
     [],
   );
   const handleAccountStatusRemove = useCallback(
@@ -52,6 +126,26 @@ export default function ResourceListFiltersExample(props) {
     handleQueryValueRemove,
     handleTaggedWithRemove,
   ]);
+
+  const promotedBulkActions = [
+    {
+      content: 'Export',
+      onAction: () => {
+        var theText = 'Export';
+        var searchTd =  'a:contains(' + theText + ')';
+          jQuery(searchTd).trigger('click');
+        console.log('Todo: implement bulk export')
+       },
+    },
+  ];
+  const bulkActions = [
+    {
+      content: 'Cancel',
+      onAction: () => console.log('Todo: implement bulk cancel'),
+    },
+   
+  
+  ];
 
   const filters = [
     {
@@ -183,6 +277,10 @@ export default function ResourceListFiltersExample(props) {
               </ResourceList.Item>
             );
           }}
+          selectedItems={selectedItems}
+          onSelectionChange={handleItemsChange}
+          promotedBulkActions={promotedBulkActions}
+          bulkActions={bulkActions}
         />
       </Card>
     </div>

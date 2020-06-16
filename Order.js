@@ -65,10 +65,10 @@ class OrderApp extends React.Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-     
+      window.rentalItems = items;
+
       return (
         
-
         
          <ResourceListFiltersExample items={items} />
         
