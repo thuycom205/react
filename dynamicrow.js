@@ -115,19 +115,19 @@ class Dtable extends React.Component {
 
   componentDidMount() {
     console.log('rpc');
-    return window.rpc.query({
-        model: 'sale.order',
-        method: 'search_read',
-        args: [
-          [['user_id', '=', [10]]],
-          ['id', 'name', 'created_date', 'partner_id'],
-      ],
-    }, {
-        shadow: true,
-    }).then(function (credit) {
-        console.log('credit');
-        console.log(credit);
-    });
+    // return window.rpc.query({
+    //     model: 'sale.order',
+    //     method: 'search_read',
+    //     args: [
+    //       [['user_id', '=', [10]]],
+    //       ['id', 'name', 'created_date', 'partner_id'],
+    //   ],
+    // }, {
+    //     shadow: true,
+    // }).then(function (credit) {
+    //     console.log('credit');
+    //     console.log(credit);
+    // });
   //   window.odoo.define('frontdesk.rental', function (require) {
   //     'use strict';
   //     var core = require('web.core');
@@ -210,7 +210,7 @@ class Dtable extends React.Component {
 
   this.props.onChange(this.state.prices);
 
-  window.core.bus.trigger('shooted', 'barcode1');
+  //window.core.bus.trigger('shooted', 'barcode1');
 
 }
   render() {

@@ -5,11 +5,20 @@ import enTranslations from '@shopify/polaris/locales/en.json';
 import '@shopify/polaris/styles.css';
 
 import OrderApp from './Order';
+import App from  './App';
+
+// function WrappedApp() {
+//   return (
+//     <AppProvider i18n={enTranslations}  >
+//       <OrderApp />
+//     </AppProvider>
+//   );
+// }
 
 function WrappedApp() {
   return (
     <AppProvider i18n={enTranslations}  >
-      <OrderApp />
+      <App />
     </AppProvider>
   );
 }

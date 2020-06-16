@@ -31,27 +31,33 @@ class OrderApp extends React.Component {
   }
   componentDidMount() {
     var self = this;
-    window.core.bus.on('renderRows', this, this._onRenderRows);
+   // window.core.bus.on('renderRows', this, this._onRenderRows);
 
-      console.log('rpc');
-      return window.rpc.query({
-          model: 'sale.order',
-          method: 'search_read',
-          args: [
-            [['user_id', '=', [10]]],
-            ['id', 'name',  'partner_id'],
-        ],
-      }, {
-          shadow: true,
-      }).then(function (items) {
-          console.log('credit');
-          console.log(items);
-          
-          self.setState({
+    let itemx = [];
+    itemx.push({id: '1' , name : 'S001'});
+         self.setState({
             isLoaded: true,
-            items: items
+            items: itemx
           });
-      });
+      console.log('rpc');
+      // return window.rpc.query({
+      //     model: 'sale.order',
+      //     method: 'search_read',
+      //     args: [
+      //       [['user_id', '=', [10]]],
+      //       ['id', 'name',  'partner_id'],
+      //   ],
+      // }, {
+      //     shadow: true,
+      // }).then(function (items) {
+      //     console.log('credit');
+      //     console.log(items);
+          
+      //     self.setState({
+      //       isLoaded: true,
+      //       items: items
+      //     });
+      // });
   
     
   
@@ -59,6 +65,12 @@ class OrderApp extends React.Component {
   }
 
   render() {
+    // items = [];
+    // items.push({id: '1' , name : 'S001'});
+    //      self.setState({
+    //         isLoaded: true,
+    //         items: items
+    //       });
     const { error, isLoaded, items } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;

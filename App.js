@@ -19,6 +19,7 @@ import {ImportMinor} from '@shopify/polaris-icons';
 import Game from  './tictactoe';
 import Dtable from  './dynamicrow';
 import { func } from 'prop-types';
+import Asynchronous from './productComponent';
 
 class Item extends React.Component {
   render() {
@@ -310,6 +311,7 @@ export default function App() {
                 label="Pickup Latitude"
 
                />
+               <Asynchronous />
             </FormLayout>
           </Card>
           </Form>
